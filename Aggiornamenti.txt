@@ -1,0 +1,3 @@
+##############31/10/2019 Creazione del dataset di immmagini dalla directory
+L'idea migliore per creare una classe dataset contenente le immagini da utilizzare è creare un modulo riutilizzabile
+python.Il modulo creato si chiamerà dataset.
