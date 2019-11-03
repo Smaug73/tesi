@@ -1,3 +1,6 @@
 ##############31/10/2019 Creazione del dataset di immmagini dalla directory
 L'idea migliore per creare una classe dataset contenente le immagini da utilizzare è creare un modulo riutilizzabile
 python.Il modulo creato si chiamerà dataset.
+
+Per poter dare in pasto alla rete neurale il dataset di immagini, bisogna creare un Dataset del tipo fornito da tensorflow.
+Per esempio un  tf.data.Dataset.from_tensors() o tf.data.Dataset.from_tensor_slices()

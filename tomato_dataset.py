@@ -12,7 +12,8 @@ from matplotlib import pyplot as plt
 
 class Dataset:
     #Costruttore della classe, costruisce se stesso partendo dal path della directory contenenti le classi
-    def _init_(self,path_to_dataset):
+    def __init__(self ,path_to_dataset):
+
         self.path_to_dataset = path_to_dataset
         classes=os.listdir(path_to_dataset)
         self.paths=dict()
@@ -37,10 +38,12 @@ class Dataset:
 
     #Metodo per mostrare una immagine
     def showImage(self,class_name,image_number):
+        print(self.getImagePath(class_name,image_number))
         image = sio.imread(self.getImagePath(class_name,image_number))  #carichiamo l'immagine
+        
         plt.figure()        #creaimo una figura
         plt.imshow(image)   #inseriamo l'immagine nella figura
-        plt.show            #mostriamo la figura
+        plt.show()            #mostriamo la figura
 
 
 
@@ -57,13 +60,30 @@ class Dataset:
             paths=self.paths[cl]                                #otteniamo la lista dei path
             shuffled_paths = np.random.permutation(paths)       #randomizzaimo i path
             split_idx= int(len(shuffled_paths)*percent_train)   #calcoliamo la quantità di immagini che faranno parte del training set,arrotondando il numero facendo il cast int,il numero sarà anche l'indice limite del train set
-            training_paths[cl]=shuffled_paths[split_idx::]      #assegniamo al test_set i path rimanenti, che sarebbero quelli che vanno dall'indice di split fino alla fine della lista.
+            training_paths[cl]=shuffled_paths[0:split_idx]      #salva le prime "split_idx" immagini nel training set
+            test_paths[cl]=shuffled_paths[split_idx::]          #assegniamo al test_set i path rimanenti, che sarebbero quelli che vanno dall'indice di split fino alla fine della lista.
 
             training_dataset = copy(self)
             training_dataset.paths=training_paths
 
             test_dataset= copy(self)
-            test_paths.paths = test_paths
+            test_dataset.paths = test_paths
 
-            return training_dataset,test_dataset
+        return training_dataset,test_dataset
 
+
+
+    #Metodo per la creazione di array di immagini
+    #Sono i metodi creano le liste da passare al modello
+    def createArrayImgs(self):
+        #img_array=np.array([])
+        img_list=list()
+        label_list= list()
+
+        for cl in self.getClasses():
+            imgs_paths= self.paths[cl]
+            for s in imgs_paths:
+                img_list.append(s)
+                label_list.append(cl)
+
+        return img_list,label_list
