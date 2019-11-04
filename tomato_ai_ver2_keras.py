@@ -16,6 +16,11 @@ from tensorflow.keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
+data_dir='C:\\Users\\stefr\\Desktop\\TESI DATASET\\PlantVillage'
 
+image_generator = ImageDataGenerator(rescale=1./255,validation_split=0.3)
 
-train_image_generator = ImageDataGenerator(rescale=1./255,validation_split=0.3)
+data_gen = image_generator.flow_from_directory(directory=data_dir,
+                                                           shuffle=True,
+                                                           
+                                                           class_mode='binary')
