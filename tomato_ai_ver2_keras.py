@@ -22,18 +22,26 @@ data_dir='C:\\Users\\stefr\\Desktop\\TESI DATASET\\PlantVillage'
 IMG_HEIGHT=256
 IMG_WIDTH=256
 
+epochs=5
+
 
 image_generator = ImageDataGenerator(rescale=1./255,validation_split=0.3)
 
 data_gen = image_generator.flow_from_directory(directory=data_dir,
                                                            shuffle=True,
-                                                           class_mode='binary')
+                                                           class_mode='binary',
+                                                           subset='training')
 
+
+test_gen= image_generator.flow_from_directory(directory=data_dir,
+                                                           shuffle=True,
+                                                           class_mode='binary',
+                                                           subset='validation')
 
 sample_training_images, _ = next(data_gen)
 # This function will plot images in the form of a grid with 1 row and 5 columns where images are placed in each column.
 def plotImages(images_arr):
-    fig, axes = plt.subplots(1, 5, figsize=(20,20))
+    fig, axes = plt.subplots(1, 10, figsize=(20,20))
     axes = axes.flatten()
     for img, ax in zip( images_arr, axes):
         ax.imshow(img)
@@ -41,23 +49,33 @@ def plotImages(images_arr):
     plt.tight_layout()
     plt.show()
 
-plotImages(sample_training_images[:5])
+plotImages(sample_training_images[:10])
 
 
+model = Sequential([
+    keras.layers.Conv2D(8, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
+    keras.layers.MaxPooling2D(),
+    keras.layers.Conv2D(32, 3, padding='same', activation='relu'),
+    keras.layers. MaxPooling2D(),
+    keras.layers.Flatten( ),      #Questo primo layer serve solo a riformattare i pixel, disponendoli su di una unica dimensione
+    keras.layers.Dense(64, activation='relu'),      #Questo secondo livello e collegato al primo ed e' formato da 128 neuroni
+    keras.layers.Dense(10, activation='softmax')
+])
+
+'''
 model = Sequential([
     Conv2D(8, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
     MaxPooling2D(),
     Conv2D(32, 3, padding='same', activation='relu'),
     MaxPooling2D(),
-    Conv2D(64, 3, padding='same', activation='relu'),
-    MaxPooling2D(),
-    Flatten(),
-    Dense(64, activation='relu'),
-    Dense(10, activation='sigmoid')
+    keras.layers.Flatten( ),      #Questo primo layer serve solo a riformattare i pixel, disponendoli su di una unica dimensione
+    keras.layers.Dense(510, activation='relu'),      #Questo secondo livello e collegato al primo ed e' formato da 128 neuroni
+    keras.layers.Dense(10, activation='softmax')
 ])
+'''
 
 model.compile(optimizer='adam',
-              loss='binary_crossentropy',
+              loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
 model.summary()
@@ -65,13 +83,17 @@ model.summary()
 history = model.fit_generator(
     data_gen,
     #steps_per_epoch=total_train #batch_size, numero totale di steps(lotti di campioni) da produrre dal generatore prima di dichiarare una ephoch terminata e iniziare la prossima epoch
-    epochs=6,
-    #validation_data=val_data_gen,
+    epochs=epochs,
+    #verbose=1,
+    validation_data=test_gen,
     #validation_steps=total_val  #batch_size
 )
 
 # Save the model
-history.save('C:\\Users\\stefr\\Desktop\\TESI DATASET\\Modelli\\model_v1.h5')
+#history.save('C:\\Users\\stefr\\Desktop\\TESI DATASET\\Modelli\\model_v2.h5')
+model.save('C:\\Users\\stefr\\Desktop\\TESI DATASET\\Modelli\\model_v5.h5')
+
+#print(history.history[])
 
 acc = history.history['accuracy']
 val_acc = history.history['val_accuracy']
@@ -79,7 +101,7 @@ val_acc = history.history['val_accuracy']
 loss = history.history['loss']
 val_loss = history.history['val_loss']
 
-epochs_range = range(6)
+epochs_range = range(epochs)
 
 plt.figure(figsize=(8, 8))
 plt.subplot(1, 2, 1)

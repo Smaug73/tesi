@@ -59,7 +59,7 @@ for i in range(25):
     plt.xlabel(class_names[train_labels[i]])
 plt.show()
 
-'''
+
 #IMPORTANTE , CAMBIARE SUL PORTATILE LA VERSIONE DI PYTHON ALLA VERSINOE 3.6.1 , QUELLA UTILIZZATA SUL FISSO.
 
 #Creaimo il primo layer del nostro modello di rete neurale
@@ -163,4 +163,3 @@ for i in range(num_images):
 plt.tight_layout()
 plt.show()
 
-'''
