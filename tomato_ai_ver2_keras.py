@@ -45,15 +45,15 @@ plotImages(sample_training_images[:5])
 
 
 model = Sequential([
-    Conv2D(16, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
+    Conv2D(8, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
     MaxPooling2D(),
     Conv2D(32, 3, padding='same', activation='relu'),
     MaxPooling2D(),
     Conv2D(64, 3, padding='same', activation='relu'),
     MaxPooling2D(),
     Flatten(),
-    Dense(512, activation='relu'),
-    Dense(1, activation='sigmoid')
+    Dense(64, activation='relu'),
+    Dense(10, activation='sigmoid')
 ])
 
 model.compile(optimizer='adam',
@@ -65,7 +65,33 @@ model.summary()
 history = model.fit_generator(
     data_gen,
     #steps_per_epoch=total_train #batch_size, numero totale di steps(lotti di campioni) da produrre dal generatore prima di dichiarare una ephoch terminata e iniziare la prossima epoch
-    epochs=15,
+    epochs=6,
     #validation_data=val_data_gen,
     #validation_steps=total_val  #batch_size
 )
+
+# Save the model
+history.save('C:\\Users\\stefr\\Desktop\\TESI DATASET\\Modelli\\model_v1.h5')
+
+acc = history.history['accuracy']
+val_acc = history.history['val_accuracy']
+
+loss = history.history['loss']
+val_loss = history.history['val_loss']
+
+epochs_range = range(6)
+
+plt.figure(figsize=(8, 8))
+plt.subplot(1, 2, 1)
+plt.plot(epochs_range, acc, label='Training Accuracy')
+plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+plt.legend(loc='lower right')
+plt.title('Training and Validation Accuracy')
+
+plt.subplot(1, 2, 2)
+plt.plot(epochs_range, loss, label='Training Loss')
+plt.plot(epochs_range, val_loss, label='Validation Loss')
+plt.legend(loc='upper right')
+plt.title('Training and Validation Loss')
+plt.show()
+
