@@ -16,6 +16,8 @@ from tensorflow.keras.layers import Dense, Conv2D, Flatten, Dropout, MaxPooling2
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
+
+
 data_dir='C:\\Users\\stefr\\Desktop\\TESI DATASET\\PlantVillage'
 
 #Dettagli immagini utilizzate
@@ -74,6 +76,21 @@ model = Sequential([
 ])
 '''
 
+#Costruiamo una architettura che possieda i livelli di dropout, in modo da evitare l'overfitting
+#Aumenteremo inoltre il numero di epoche.Questa tipologia sarà l'architettura definitiva della tesi(per ora).
+model = Sequential([
+    keras.layers.Conv2D(8, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
+    keras.layers.MaxPooling2D(),   
+    keras.layers.Dropout(0.2),      #Un livello di dropout dopo il primo maxPooling 
+    keras.layers.Conv2D(32, 3, padding='same', activation='relu'),
+    keras.layers. MaxPooling2D(),
+    keras.layers.Dropout(0.2),      #Un livello di dropout dopo l'ultimo livello di maxPooling 
+    keras.layers.Flatten( ),      #Questo primo layer serve solo a riformattare i pixel, disponendoli su di una unica dimensione
+    keras.layers.Dense(64, activation='relu'),      #Questo secondo livello e collegato al primo ed e' formato da 128 neuroni
+    keras.layers.Dense(10, activation='softmax')
+])
+
+
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
@@ -91,7 +108,7 @@ history = model.fit_generator(
 
 # Save the model
 #history.save('C:\\Users\\stefr\\Desktop\\TESI DATASET\\Modelli\\model_v2.h5')
-model.save('C:\\Users\\stefr\\Desktop\\TESI DATASET\\Modelli\\model_v5.h5')
+model.save('C:\\Users\\stefr\\Desktop\\TESI DATASET\\Modelli\\model_v_definitiva_1.h5')
 
 #print(history.history[])
 
