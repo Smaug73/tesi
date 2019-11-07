@@ -11,6 +11,7 @@ Per esempio un  tf.data.Dataset.from_tensors() o tf.data.Dataset.from_tensor_sli
 Prossimo step eliminare l'overfitting attraverso i livelli di dropout
 
 
+
 TESI:
 PRIMO CAPITOLO: machine learning e speializzato sul deep learning
 secondo capitolo: agricoltura e applicazione di intelligenza artificiale
