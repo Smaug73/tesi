@@ -13,7 +13,7 @@ Prossimo step eliminare l'overfitting attraverso i livelli di dropout
 
 
 TESI:
-PRIMO CAPITOLO: machine learning e speializzato sul deep learning
+PRIMO CAPITOLO: machine learning e specializzato sul deep learning
 secondo capitolo: agricoltura e applicazione di intelligenza artificiale
 (CERCARE PAROLA CHIAVE PER RICHERCA "AGRICOLTURA 4.0")
 TERZO CAPITOLO: DESCRIZIONE DELL'APPLICAZIONE  E TECNOLOGIA UTILIZZATA, 

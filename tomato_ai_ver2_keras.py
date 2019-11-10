@@ -24,7 +24,7 @@ data_dir='C:\\Users\\stefr\\Desktop\\TESI DATASET\\PlantVillage'
 IMG_HEIGHT=256
 IMG_WIDTH=256
 
-epochs=5
+epochs=15
 
 
 image_generator = ImageDataGenerator(rescale=1./255,validation_split=0.3)
@@ -53,7 +53,7 @@ def plotImages(images_arr):
 
 plotImages(sample_training_images[:10])
 
-
+'''
 model = Sequential([
     keras.layers.Conv2D(8, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
     keras.layers.MaxPooling2D(),
@@ -63,7 +63,7 @@ model = Sequential([
     keras.layers.Dense(64, activation='relu'),      #Questo secondo livello e collegato al primo ed e' formato da 128 neuroni
     keras.layers.Dense(10, activation='softmax')
 ])
-
+'''
 '''
 model = Sequential([
     Conv2D(8, 3, padding='same', activation='relu', input_shape=(IMG_HEIGHT, IMG_WIDTH ,3)),
