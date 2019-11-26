@@ -20,4 +20,4 @@ TERZO CAPITOLO: DESCRIZIONE DELL'APPLICAZIONE  E TECNOLOGIA UTILIZZATA,
                         descrivere prima cosa il problema delle malattia dei pomodori descrivendo le classi che ci sono nel dataset
                         in seguito descrivere la scelta delle rete e dell'architettura.
 
-
+PROGETTO DAL QUALE SI ISPIRA LA TESI SI CHIAMA INNOVARE.
