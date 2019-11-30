@@ -21,7 +21,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
 #Carichiamo il modello dalla directory nella quale e' stato salvato
-model= tf.keras.models.load_model('C:\\Users\\stefr\\Desktop\\TESI DATASET\\Modelli\\model_v5.h5')
+model= tf.keras.models.load_model('C:\\Users\\stefr\\Desktop\\TESI DATASET\\Modelli\\model_v_definitiva_5.h5')
 
 
 #Proviamo a effettuare delle predizioni utilizzando il modello caricato
